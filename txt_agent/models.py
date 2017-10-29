@@ -29,4 +29,14 @@ class Action(models.Model):
 
     def __str__(self):
         return self.action_name
+
+@python_2_unicode_compatible
+class Argument(models.Model):
+    """model of arguments """
+    argument_name = models.CharField(max_length=32)
+    action_name = models.ForeignKey(to="Action", on_delete=models.CASCADE)
+
+    def str(self):
+        """compatible to python 2"""
+        return self.argument_name
     
