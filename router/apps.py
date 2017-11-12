@@ -6,14 +6,19 @@ from django.apps import AppConfig
 
 import zmq
 
-__agents__ = None
 
-class DataAgent(object):
-    """data agent is to collect data and publish data out"""
-    def __init__(self):
-        self.adddr = None
-        self.sock = None
-        
+__zmqContext__ = zmq.Context()
+__proxies__ = []
+
+
+def init_router(proxies):
+    """Init routers for application"""
+    for proxy in proxies:
+        __proxies__.append((proxy.cb,__zmqContext__.socket("REP")))
+
+
+
+
 class RouterConfig(AppConfig):
     name = 'router'
     
