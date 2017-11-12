@@ -9,7 +9,7 @@ from django.db import models
 @python_2_unicode_compatible
 class Services(models.Model):
     """model of types of Service """
-    service_name = models.CharField(max_length=64)
+    service_name = models.CharField(max_length=64, prime_key=True,unique=True)
     amount = models.DecimalField(0)
 
     def str(self):
@@ -21,9 +21,9 @@ class Services(models.Model):
 
 
 @python_2_unicode_compatible
-class ServiceInstances(models.Model):
+class ServiceInstance(models.Model):
     """model of service nodes which observable"""
-    service_id = models.CharField(max_length=64)
+    service_id = models.CharField(max_length=64,prime_key=True)
     ip_address = models.CharField(max_length=128)
     port = models.DecimalField(0)
     service_name = models.ForeignKey(to="Service", \
@@ -41,7 +41,7 @@ class ServiceInstances(models.Model):
 @python_2_unicode_compatible
 class ProxyInstance(models.Model):
     """model of proxies """
-    proxy_id = models.CharField(max_length=64)
+    proxy_id = models.CharField(max_length=64,prime_key=True)
     ip_address = models.CharField(max_length=128)
     frontend = models.DecimalField(0)
     backend = models.DecimalField(0)
@@ -57,4 +57,4 @@ class ProxyInstance(models.Model):
 class ServiceBindProxy(models.Model):
     """binding of proxies and service"""
     proxy_id = models.ForeignKey("ProxyInstance")
-    server_id= models.ForeignKey("ServiceInstances")
+    server_id= models.ForeignKey("ServiceInstance")
